@@ -12,7 +12,7 @@ Usage
 service = 9.8
 quality = 6.5
 
-How much would we recoment the tip?
+How much would we recommend the tip?
 
 '''
 
@@ -47,6 +47,8 @@ Define the fuzzy relationship between input and output variables by defining the
 3. IF the food is great OR the service is amazing then the tip will be high
 
 '''
+# RULES:
+
 qual_level_lo = fuzz.interp_membership(x_qual, qual_lo, 6.5)
 qual_level_md = fuzz.interp_membership(x_qual, qual_md, 6.5)
 qual_level_hi = fuzz.interp_membership(x_qual, qual_hi, 6.5)
@@ -66,10 +68,12 @@ tip_activation_md = np.fmin(serv_level_md, tip_md)
 active_rule3 = np.fmax(qual_level_hi, serv_level_hi)
 tip_activation_hi = np.fmin(active_rule3, tip_hi)
 
-# Defuzzific, ation
+# Defuzzification
 aggregated = np.fmax(tip_activation_lo, np.fmax(tip_activation_md, tip_activation_hi))
 
 tip = fuzz.defuzz(x_tip, aggregated, 'centroid')
 
 print(tip)
+
+# END
 
